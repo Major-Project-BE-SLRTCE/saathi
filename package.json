@@ -1,0 +1,51 @@
+{
+  "name": "saathi",
+  "version": "1.0.0",
+  "description": "A mental health chatbot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
+    "eslint:fix": "eslint --quiet --fix",
+    "prettier:fix": "prettier --write --ignore-unknown",
+    "server": "nodemon index.js",
+    "client": "npm run dev --prefix ./client",
+    "app": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [
+    "chatbot"
+  ],
+  "author": "\"; DROP ALL TABLES;",
+  "license": "ISC",
+  "devDependencies": {
+    "commitizen": "^4.2.6",
+    "eslint": "^8.31.0",
+    "eslint-config-prettier": "^8.6.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.1.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.2"
+  },
+  "lint-staged": {
+    "*.{ js, jsx }": [
+      "eslint --quiet --fix"
+    ],
+    "*.{ json, js, jsx, html }": [
+      "prettier --write --ignore-unknown"
+    ]
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^7.6.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.3",
+    "nodemailer": "^6.9.0"
+  }
+}
