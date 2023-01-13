@@ -35,10 +35,10 @@
     "vite": "^4.0.0"
   },
   "lint-staged": {
-    "*.{ js, jsx }": [
+    "*.{ js,jsx }": [
       "eslint --quiet --fix"
     ],
-    "*.{ json, js, jsx, html }": [
+    "*.{ json,js,jsx,html }": [
       "prettier --write --ignore-unknown"
     ]
   }
