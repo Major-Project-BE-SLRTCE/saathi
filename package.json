@@ -10,8 +10,8 @@
     "eslint:fix": "eslint --quiet --fix",
     "prettier:fix": "prettier --write --ignore-unknown",
     "server": "nodemon index.js",
-    "client": "npm run dev --prefix ./client",
-    "app": "concurrently \"npm run server\" \"npm run client\""
+    "client": "yarn --cwd ./client dev",
+    "app": "concurrently \"yarn run server\" \"yarn run client\""
   },
   "keywords": [
     "chatbot"
@@ -20,8 +20,10 @@
   "license": "ISC",
   "devDependencies": {
     "commitizen": "^4.2.6",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-react": "^7.32.1",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
     "nodemon": "^2.0.20",
@@ -29,7 +31,7 @@
   },
   "lint-staged": {
     "*.{ js,jsx }": [
-      "eslint --quiet --fix"
+      "eslint --cache --fix"
     ],
     "*.{ json,js,jsx,html }": [
       "prettier --write --ignore-unknown"
@@ -47,5 +49,10 @@
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.3",
     "nodemailer": "^6.9.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
