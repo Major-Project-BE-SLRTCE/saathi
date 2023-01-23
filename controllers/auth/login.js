@@ -6,18 +6,18 @@ const generateJwt = require("../../utils/generateJwt");
 const login = async (req, res) => {
   try {
     const { usernameOrEmail, password } = req.body;
-    const userRes = await User.findOne({
+    const userDetails = await User.findOne({
       $or: [{ username: usernameOrEmail }, { email: usernameOrEmail }]
     });
 
     // if entered username or email address exists
-    if (userRes) {
+    if (userDetails) {
       // validating the password
       const [isValidPassword, passwordError] = validatePassword(password);
 
       // if the password is valid
       if (isValidPassword) {
-        const hashedPassword = userRes.password;
+        const hashedPassword = userDetails.password;
 
         // isPasswordMatched will be true or false
         const isPasswordMatched = await comparePassword(
@@ -28,7 +28,7 @@ const login = async (req, res) => {
         // if the password is matched
         if (isPasswordMatched) {
           // generating JWT token
-          const token = generateJwt(userRes._id, userRes.username);
+          const token = generateJwt(userDetails._id, userDetails.username);
 
           // saving the token in the cookie on client's machine
           res.cookie("auth", token, {
@@ -41,8 +41,13 @@ const login = async (req, res) => {
 
           res.status(200).json({
             message: "Logged in successfully.",
-            userId: userRes._id,
-            username: userRes.username
+            userDetails: {
+              ...userDetails._doc,
+              password: undefined,
+              resetPasswordToken: undefined,
+              resetPasswordTokenExpiryTime: undefined,
+              __v: undefined
+            }
           });
         } else {
           res.status(400).json({ message: "Password not matched." });
