@@ -1,6 +1,6 @@
 const User = require("../../models/users");
 
-const readUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const { username } = req.body;
     const userRes = await User.deleteOne({ username });
@@ -16,4 +16,4 @@ const readUser = async (req, res) => {
   }
 };
 
-module.exports = readUser;
+module.exports = deleteUser;
