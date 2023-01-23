@@ -5,21 +5,21 @@ const userSchema = Schema({
   // common fields
   accountCreationDate: {
     type: Date,
-    default: new Date(),
+    default: new Date()
   },
   lastOnline: {
-    type: Date,
+    type: Date
   },
   avatar: {
     isExists: {
       type: Boolean,
-      default: "false",
+      default: false
     },
     imageLink: {
       type: String,
       trim: true,
-      default: null,
-    },
+      default: null
+    }
   },
   //-- need to define a suitable user type for general user
   //-- currently setting it as "chatter"
@@ -28,8 +28,8 @@ const userSchema = Schema({
     required: [true, "User type is required."],
     enum: {
       values: ["chatter", "doctor"],
-      message: "User type must be either chatter or doctor.",
-    },
+      message: "User type must be either chatter or doctor."
+    }
   },
   username: {
     type: String,
@@ -41,22 +41,23 @@ const userSchema = Schema({
     //-- username should not start with a digit, "." and "_".
     match: [/^[a-z0-9_.]+$/, "Username must contain only letters and numbers."],
     validate: {
-      validator: async (value) => {
-        await User.findOne({ username: value })
-          .then((user) => {
-            if (user) {
-              return false; // value is not unique or already exist
+      validator: (value) => {
+        return new Promise((resolve, reject) => {
+          User.findOne({ username: value }, (err, user) => {
+            if (err) {
+              reject(
+                new Error("An error occurred while checking for duplicates.")
+              );
+            } else if (user) {
+              reject(new Error("Username already exists."));
             } else {
-              return true;
+              resolve(true);
             }
-          })
-          .catch((err) => {
-            console.log("Error:\n" + err);
-            return false;
           });
+        });
       },
-      message: "Username already exist.",
-    },
+      message: "Username already exist."
+    }
   },
   name: {
     type: String,
@@ -64,7 +65,7 @@ const userSchema = Schema({
     minlength: [3, "Name must contain at least 3 characters."],
     maxlength: [60, "Name must contain at most 60 characters."],
     required: [true, "Name is required."],
-    match: [/^[a-zA-Z ]+$/, "Name must contain only letters and spaces."],
+    match: [/^[a-zA-Z ]+$/, "Name must contain only letters and spaces."]
   },
   email: {
     type: String,
@@ -73,55 +74,47 @@ const userSchema = Schema({
     required: [true, "Email is required."],
     match: [
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-      "Email is not valid.",
+      "Email is not valid."
     ],
-    // unique: [true, "Email address already exist."]
     validate: {
       validator: (value) => {
         return new Promise((resolve, reject) => {
           User.findOne({ email: value }, (err, user) => {
             if (err) {
               reject(
-                new Error("An error occurred while checking for duplicates")
+                new Error("An error occurred while checking for duplicates.")
               );
             } else if (user) {
-              reject(
-                new Error(
-                  "The email already exists. Please choose a different one."
-                )
-              );
+              reject(new Error("Email address already exists."));
             } else {
               resolve(true);
             }
           });
         });
       },
-      message: "Email address already exist.",
-    },
+      message: "Email address already exist."
+    }
   },
   gender: {
     type: String,
     enum: {
       //-- check gender once
       values: ["male", "female", "non-binary", "other"],
-      message: "Choose a valid gender.",
-    },
+      message: "Choose a valid gender."
+    }
   },
   password: {
-    type: String,
-    minlength: [8, "Password must contain at least 8 characters."],
-    maxlength: [30, "Password must contain at most 30 characters."],
-    required: [true, "Password is required."],
-    match: [
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      "Password must contain at least 8 characters, one uppercase letter, one lowercase letter and one number.",
-    ],
+    type: String
+    // the password will be hashed before saving to the database
+    // so it can't be validated here in the schema
+    // hence it is validated in a separate function
+    // which you can find "root/utils/validatePassword.js"
   },
   resetPasswordToken: {
-    type: String,
+    type: String
   },
   resetPasswordTokenExpiryTime: {
-    type: Number,
+    type: Number
   },
   // fields only for patients
   //-- check DOB once
@@ -129,8 +122,8 @@ const userSchema = Schema({
     type: Date,
     match: [
       /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/,
-      "Date of birth must be in dd/mm/yyyy format.",
-    ],
+      "Date of birth must be in dd/mm/yyyy format."
+    ]
   },
   occupation: {
     type: String,
@@ -188,25 +181,25 @@ const userSchema = Schema({
         "surgeon",
         "train conductor",
         "waiter",
-        "other",
+        "other"
       ],
-      message: "Choose a valid occupation.",
-    },
+      message: "Choose a valid occupation."
+    }
   },
   pincode: {
     type: String,
-    match: [/^[0-9]{6}$/, "Pincode must contain only 6 digits."],
+    match: [/^[0-9]{6}$/, "Pincode must contain only 6 digits."]
   },
   totalDaysChatted: {
-    type: Number,
+    type: Number
   },
   longestChattingStreak: {
     // should be updated everytime when a user starts chatting
-    type: Number, // in number of days
+    type: Number // in number of days
   },
   averageChattingTime: {
     //-- define logic for it
-    type: Number, // in minutes
+    type: Number // in minutes
   },
   // fields only for doctors
   specialization: {
@@ -220,59 +213,60 @@ const userSchema = Schema({
         "psychiatrist",
         "psychoanalyst",
         "psychologist",
-        "psychotherapist",
+        "psychotherapist"
       ],
-      message: "Choose a valid specialization.",
-    },
+      message: "Choose a valid specialization."
+    }
   },
   experience: {
-    type: Number, // in years
-    match: [/^[0-9]+$/, "Experience must contain only numbers."],
+    type: Number, // in years,
+    match: [/^[1-9]+$/, "Experience must contain only numbers."]
   },
   numberOfConsultations: {
     //-- define logic for it
-    type: Number,
+    type: Number
   },
   rating: {
-    type: Number,
+    type: Number
   },
   address: {
     baseAddress: {
       type: String,
       trim: true,
       minlength: 10,
-      maxlength: 200,
+      maxlength: 200
     },
     city: String,
     state: String,
     country: String,
     pincode: {
       type: String,
-      match: [/^[0-9]{6}$/, "Pincode must contain only 6 digits."],
+      match: [/^[0-9]{6}$/, "Pincode must contain only 6 digits."]
     },
     phone: {
       type: String,
       trim: true,
-      match: [/^[0-9]{10}$/, "Phone number must contain only 10 digits."],
+      match: [/^[0-9]{10}$/, "Enter a valid phone number."],
       validate: {
         validator: (value) => {
-          return User.findOne({ phone: value })
-            .then((user) => {
-              if (user) {
-                return false; // value is not unique or already exist
+          return new Promise((resolve, reject) => {
+            User.findOne({ phone: value }, (err, user) => {
+              if (err) {
+                reject(
+                  new Error("An error occurred while checking for duplicates.")
+                );
+              } else if (user) {
+                reject(new Error("Phone number already exists."));
               } else {
-                return true;
+                resolve(true);
               }
-            })
-            .catch((err) => {
-              console.log("Error:\n" + err);
-              return false;
             });
+          });
         },
-        message: "Phone number already exist.",
-      },
-    },
-  },
+        message: "Phone number already exist."
+      }
+    }
+  }
 });
 
 const User = model("users", userSchema);
