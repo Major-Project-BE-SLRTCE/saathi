@@ -1,34 +1,73 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import axios from "axios";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ToastContainer } from "react-toastify";
+import { ThemeProvider } from "styled-components";
+// import Navbar from "./components/Navbar/Navbar.component";
+// import NotFound from "./components/utils/NotFound";
 
-function App() {
-  const [count, setCount] = useState(0);
+// import Landing from "./pages/Landing";
+// import LandingActions from "./components/landing-and-auth/LandingActions";
+// import Auth from "./components/landing-and-auth/Auth";
+// import ResetPassword from "./components/landing-and-auth/ResetPassword";
 
+// import PatientDashboard from "./pages/PatientDashboard";
+// import DoctorDashboard from "./pages/DoctorDashboard";
+
+import { AuthProvider } from "./context/AuthContext";
+// import Navbar from "./components/Navbar/Navbar.component";
+
+import LandingPage from "./pages/landing-page/LandingPage.component";
+import LoginPage from "./pages/login-page/LoginPage.component";
+
+import theme from "./utils/theme";
+
+axios.defaults.withCredentials = true;
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Saathi</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        {/* <AuthProvider> */}
+        <Router>
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </Router>
+        {/* <Router>
+          <Navbar />
+          <Routes>
+          <Route path="/" element={<Landing />}>
+          <Route path="/" element={<LandingActions />} />
+          {/* <Route path="/auth/:authType" element={<Auth />} /> }
+          <Route
+          path="/auth/reset-password/:token"
+          element={<ResetPassword />}
+          />
+            </Route>
+            <Route
+            path="/dashboard"
+            element={1 === 1 ? <PatientDashboard /> : <DoctorDashboard />}
+            />
+            <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Router> */}
+
+        <ToastContainer position="bottom-right" autoClose={3000} />
+        {/* </AuthProvider> */}
+      </ThemeProvider>
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,21 @@
+.auth {
+}
+
+.auth-title {
+  display: block;
+  margin-bottom: 24px;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.auth-link {
+  display: block;
+  color: #007bff;
+  text-align: center;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}

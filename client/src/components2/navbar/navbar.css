@@ -1,0 +1,32 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100vw;
+  height: var(--navbar-height);
+  position: sticky;
+  top: 0;
+  box-shadow: 0 0 20px #ccc;
+}
+
+.nl-link {
+  color: #000;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nr-link {
+  margin: auto 12px;
+  padding: 8px 16px;
+  color: #007bff;
+  text-decoration: none;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  transition: all 200ms;
+}
+
+.nr-link:hover {
+  background-color: #007bff;
+  color: #fff;
+}

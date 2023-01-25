@@ -1,0 +1,24 @@
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - var(--navbar-height));
+  text-align: center;
+}
+
+.nf-text {
+  display: block;
+  margin-bottom: 32px;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.nf-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.nf-link:hover {
+  text-decoration: underline;
+}
