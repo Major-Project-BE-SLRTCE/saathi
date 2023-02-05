@@ -4,8 +4,8 @@ endOfLine: lf
 htmlWhitespaceSensitivity: css
 insertPragma: false
 singleAttributePerLine: false
-bracketSameLine: false
-jsxBracketSameLine: false
+bracketSameLine: true
+jsxBracketSameLine: true
 jsxSingleQuote: false
 printWidth: 80
 proseWrap: preserve
