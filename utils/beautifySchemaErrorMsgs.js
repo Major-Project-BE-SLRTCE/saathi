@@ -7,7 +7,7 @@ const beautifySchemaErrorMsgs = (schemaErrors) => {
 
     // join all error messages into a single string
     // i.e. make a single sentence in the form of "Error one.\nError two."
-    const errorMsgs = errorsArray.join("\n");
+    const errorMsgs = errorsArray.join(";");
 
     return errorMsgs;
   } catch (error) {
