@@ -28,6 +28,7 @@ const login = async (req, res) => {
         // if the password is matched
         if (isPasswordMatched) {
           // generating JWT token
+          // with payloads as userId and username
           const token = generateJwt(userDetails._id, userDetails.username);
 
           // saving the token in the cookie on client's machine
