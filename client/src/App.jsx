@@ -1,9 +1,26 @@
 import { useState } from "react";
+import io from "socket.io-client";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const socket = io("http://localhost:5000");
+
+  socket.on("connect", () => {
+    console.log("Connected to server.");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Disconnected from server.");
+  });
+
+  socket.on("message", (data) => {
+    console.log(data);
+  });
+
+  socket.emit("message", { text: "Hello world!" });
 
   return (
     <div className="App">

@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const User = require("../models/users");
+const User = require("../models/user");
 
 const genResetPwdToken = async (email) => {
   try {
