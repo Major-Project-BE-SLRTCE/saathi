@@ -1,4 +1,4 @@
-const Users = require("../../models/Users");
+const Users = require("../../models/user");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../../utils/config");
 
@@ -25,12 +25,10 @@ const isLoggedIn = async (req, res) => {
         );
 
         if (userDetails) {
-          res
-            .status(200)
-            .json({
-              message: `${userDetails.name} is already logged in.`,
-              userDetails
-            });
+          res.status(200).json({
+            message: `${userDetails.name} is already logged in.`,
+            userDetails
+          });
         } else {
           res.status(401).json({ message: "User not found." });
         }

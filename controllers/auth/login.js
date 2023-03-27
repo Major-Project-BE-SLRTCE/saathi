@@ -1,4 +1,4 @@
-const User = require("../../models/users");
+const User = require("../../models/user");
 const validatePassword = require("../../utils/validatePassword");
 const comparePassword = require("../../utils/comparePassword");
 const generateJwt = require("../../utils/generateJwt");

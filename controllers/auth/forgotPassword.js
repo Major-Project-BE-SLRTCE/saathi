@@ -1,4 +1,4 @@
-const User = require("../../models/users");
+const User = require("../../models/user");
 const genResetPwdToken = require("../../utils/genResetPwdToken");
 const { CLIENT_URL } = require("../../utils/config");
 const sendEmail = require("../../utils/sendEmail");

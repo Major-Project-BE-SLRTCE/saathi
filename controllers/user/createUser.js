@@ -1,4 +1,4 @@
-const User = require("../../models/users");
+const User = require("../../models/user");
 const validatePassword = require("../../utils/validatePassword");
 const hashPassword = require("../../utils/hashPassword");
 const beautifySchemaErrorMsgs = require("../../utils/beautifySchemaErrorMsgs");
