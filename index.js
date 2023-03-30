@@ -40,16 +40,8 @@ const io = new Server(httpServer, {
   }
 });
 
-io.on("connection", (socket) => {
-  console.log("New client connected.");
-
-  socket.on("message", (data) => {
-    console.log("Message received: ", data);
-    socket.emit("message", "Aur batao kya chal raha hai?");
-  });
-});
-
-// module.exports = { io };
+module.exports = { io };
+require("./controllers/message/socketio");
 
 // ----------------------------------------------
 
@@ -59,10 +51,11 @@ app.get("/", (req, res) => {
 
 const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
+const messageRoutes = require("./routes/message");
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
-// app.use("/api/chat", auth, chatRoutes);
+app.use("/api/message", messageRoutes);
 
 // ----------------------------------------------
 
