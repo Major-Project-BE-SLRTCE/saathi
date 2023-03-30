@@ -1,11 +1,10 @@
-import { useState } from "react";
-import io from "socket.io-client";
+import { useState, useEffect } from "react";
+import socket from "./utils/socketio";
 import "./App.css";
 
 function App() {
   const [messageBody, setMessageBody] = useState("");
-
-  const socket = io("http://localhost:5000");
+  const [allMessages, setAllMessages] = useState([]);
 
   socket.on("connect", () => {
     console.log("Connected to server.");
@@ -18,6 +17,7 @@ function App() {
   // sending message to server
   const sendMessage = (e, socket, messageBody) => {
     e.preventDefault();
+    setAllMessages((allMessages) => [...allMessages, { sent: messageBody }]);
 
     socket.emit("message_from_client", {
       sentByUser: true,
@@ -28,10 +28,19 @@ function App() {
     setMessageBody("");
   };
 
+  useEffect(() => {
+    socket.on("message_from_server", (data) => {
+      setAllMessages((allMessages) => [
+        ...allMessages,
+        { rec: data.messageBody }
+      ]);
+    });
+  }, [socket]);
+
   // receiving message from server
-  socket.on("message_from_server", (data) => {
-    console.log(data);
-  });
+  // socket.on("message_from_server", (data) => {
+  //   console.log(data);
+  // });
 
   // error handling
   socket.on("error", (err) => {
@@ -42,7 +51,7 @@ function App() {
     <div className="App">
       <h1>Saathi</h1>
 
-      <form onClick={(e) => sendMessage(e, socket, messageBody)}>
+      <form onSubmit={(e) => sendMessage(e, socket, messageBody)}>
         <div className="card">
           <input
             type="text"
@@ -57,6 +66,10 @@ function App() {
           <button type="submit">Send Message</button>
         </div>
       </form>
+
+      <br />
+      <br />
+      {JSON.stringify(allMessages)}
     </div>
   );
 }
