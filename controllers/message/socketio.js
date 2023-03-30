@@ -1,4 +1,4 @@
-const io = require("../../index");
+const { io } = require("../../index");
 const newMessage = require("./newMessage");
 
 io.on("connection", (socket) => {
