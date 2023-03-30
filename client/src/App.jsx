@@ -1,10 +1,9 @@
 import { useState } from "react";
 import io from "socket.io-client";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [messageBody, setMessageBody] = useState("");
 
   const socket = io("http://localhost:5000");
 
@@ -16,34 +15,48 @@ function App() {
     console.log("Disconnected from server.");
   });
 
-  socket.on("message", (data) => {
+  // sending message to server
+  const sendMessage = (e, socket, messageBody) => {
+    e.preventDefault();
+
+    socket.emit("message_from_client", {
+      sentByUser: true,
+      userId: "63ce206e9783abb439c691f0",
+      messageBody
+    });
+
+    setMessageBody("");
+  };
+
+  // receiving message from server
+  socket.on("message_from_server", (data) => {
     console.log(data);
   });
 
-  socket.emit("message", { text: "Hello world!" });
+  // error handling
+  socket.on("error", (err) => {
+    console.log(err);
+  });
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
       <h1>Saathi</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <form onClick={(e) => sendMessage(e, socket, messageBody)}>
+        <div className="card">
+          <input
+            type="text"
+            placeholder="Enter your message"
+            value={messageBody}
+            onChange={(e) => setMessageBody(e.target.value)}
+          />
+
+          <br />
+          <br />
+
+          <button type="submit">Send Message</button>
+        </div>
+      </form>
     </div>
   );
 }
