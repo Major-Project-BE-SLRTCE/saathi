@@ -5,7 +5,7 @@ const validatePassword = (password) => {
     } else if (password.length > 30) {
       return [false, "Password must contain at most 30 characters."];
     } else {
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/;
+      const regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
       const isValid = regex.test(password);
 
       if (isValid) {
