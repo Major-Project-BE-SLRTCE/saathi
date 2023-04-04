@@ -15,7 +15,7 @@ app.use(
       //-- remove localhosts in production
       "http://localhost:3000",
       "http://127.0.0.1:3000",
-      CLIENT_URL,
+      CLIENT_URL
     ],
     credentials: true,
     methods: ["GET", "POST", "HEAD", "PUT", "PATCH", "DELETE"],
@@ -27,8 +27,8 @@ app.use(
       "Access-Control-Allow-Headers",
       "Access-Control-Request-Method",
       "Access-Control-Request-Headers",
-      "Authorization",
-    ],
+      "Authorization"
+    ]
   })
 );
 
@@ -43,8 +43,10 @@ app.get("/", (req, res) => {
 });
 
 const userRoutes = require("./routes/user");
+const authRoutes = require("./routes/auth");
 
 app.use("/user", userRoutes);
+app.use("/auth", authRoutes);
 
 // ----------------------------------------------
 
