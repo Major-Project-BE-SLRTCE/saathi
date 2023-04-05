@@ -6,6 +6,8 @@ const readUser = require("../controllers/user/readUser");
 const deleteUser = require("../controllers/user/deleteUser");
 const updatePassword = require("../controllers/user/updatePassword");
 
+const auth = require("../middlewares/auth");
+
 router.post("/create", async (req, res) => {
   await createUser(req, res);
 });
@@ -18,7 +20,7 @@ router.delete("/delete", async (req, res) => {
   await deleteUser(req, res);
 });
 
-router.patch("/update-password", async (req, res) => {
+router.patch("/update-password", auth, async (req, res) => {
   await updatePassword(req, res);
 });
 

@@ -32,17 +32,18 @@ const login = async (req, res) => {
           const token = generateJwt(userDetails._id, userDetails.username);
 
           // saving the token in the cookie on client's machine
-          res.cookie("auth", token, {
-            expires: new Date(Date.now() + 3600000),
-            httpOnly: true,
-            secure: true,
-            sameSite: "none",
-            path: "/"
-          });
+          // res.cookie("auth", token, {
+          //   expires: new Date(Date.now() + 3600000),
+          //   httpOnly: true,
+          //   secure: true,
+          //   sameSite: "none",
+          //   path: "/"
+          // });
 
           res.status(200).json({
+            accessToken: token,
             message: "Logged in successfully.",
-            userDetails: {
+            user: {
               ...userDetails._doc,
               password: undefined,
               resetPasswordToken: undefined,

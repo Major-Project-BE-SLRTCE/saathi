@@ -1,7 +1,8 @@
 const User = require("../../models/users");
 const validatePassword = require("../../utils/validatePassword");
 const hashPassword = require("../../utils/hashPassword");
-const beautifySchemaErrorMsgs = require("../../utils/beautifySchemaErrorMsgs");
+const beautifySchemaErrorMsgs =
+  require("../../utils/beautifySchemaErrorMsgs").default;
 
 const createUser = async (req, res) => {
   try {
@@ -24,16 +25,19 @@ const createUser = async (req, res) => {
       const userRes = await userDetails.save();
 
       if (userRes) {
-        res.status(201).json({ message: "Account created." });
+        res.status(201).json({ message: "Account created.", data: userRes });
       } else {
-        res.status(500).json({ message: "Account not created." });
+        res.status(500).json({ message: "Account not created.", data: {} });
       }
     } else {
-      res.status(400).json({ message: passwordMsg });
+      res.status(400).json({ message: passwordMsg, data: {} });
     }
   } catch (err) {
     console.log("Create User Error:\n", err);
-    res.status(400).json({ message: beautifySchemaErrorMsgs(err) });
+    res.status(400).json({
+      error: true,
+      message: Object.values(err.errors).map((e) => e.message)
+    });
   }
 };
 

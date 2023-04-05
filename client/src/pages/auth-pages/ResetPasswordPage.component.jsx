@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { TextField, Button } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
-import AuthLayout from "../../layout/AuthLayout.component";
 import { validationSchemaResetPassword } from "../../utils/validations";
 import { resetPassword } from "../../utils/auth";
 
@@ -14,11 +13,10 @@ const ResetPasswordPage = () => {
   const [isSubmitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    // if already logged in, redirect to dashboard
-    if (auth.isLoggedIn) {
+    if (auth.user) {
       navigate("/dashboard");
     }
-  });
+  }, [auth.user, navigate]);
 
   document.title = "Reset Password - Saathi";
 
@@ -58,7 +56,7 @@ const ResetPasswordPage = () => {
   });
 
   return (
-    <AuthLayout>
+    <>
       <h1>Reset Password</h1>
 
       <form onSubmit={formik.handleSubmit}>
@@ -87,7 +85,7 @@ const ResetPasswordPage = () => {
           {!isSubmitting ? "Reset Password" : "Resetting password..."}
         </Button>
       </form>
-    </AuthLayout>
+    </>
   );
 };
 

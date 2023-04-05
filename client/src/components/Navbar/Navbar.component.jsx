@@ -7,36 +7,23 @@ import {
   NavbarRedirectLink
 } from "./Navbar.styled";
 import Button from "@mui/material/Button";
-import { logout } from "../../utils/auth";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
-
-  const handleLogout = async () => {
-    const logoutRes = await logout();
-
-    if (logoutRes.status === 200) {
-      setAuth({
-        ...auth,
-        isLoggedIn: false,
-        userId: "",
-        name: "",
-        userType: ""
-      });
-
-      navigate("/login");
-    } else {
-      console.log("Logout Error:", logoutRes.data.message);
-    }
+  const handleLogout = () => {
+    localStorage.removeItem("ACCESS_TOKEN");
+    localStorage.removeItem("USER");
+    setAuth({});
+    navigate("/");
   };
-
+  console.log("navbar", auth);
   return (
     <NavbarContainer>
       <NavbarLink to="/">Saathi</NavbarLink>
 
       <NavbarRedirectLinkWrapper>
-        {!auth.isLoggedIn ? (
+        {!auth?.user ? (
           <>
             <NavbarRedirectLink to="/login">Login</NavbarRedirectLink>
             <NavbarRedirectLink to="/signup">Register</NavbarRedirectLink>
@@ -50,7 +37,7 @@ const Navbar = () => {
         ) : (
           <>
             <NavbarRedirectLink to="/dashboard">Dashboard</NavbarRedirectLink>
-            <Button variant="outlined" onClick={handleLogout}>
+            <Button variant="outlined" onClick={() => handleLogout()}>
               Logout
             </Button>
           </>

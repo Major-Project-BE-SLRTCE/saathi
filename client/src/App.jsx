@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "styled-components";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthProvider";
 // import axios from "axios";
 
 import Navbar from "./components/Navbar/Navbar.component";
@@ -14,6 +14,7 @@ import ResetPasswordPage from "./pages/auth-pages/ResetPasswordPage.component";
 import DashboardPage from "./pages/dashboard-page/DashboardPage.component";
 import theme from "./utils/theme";
 
+import RequireAuth from "./components/RequireAuth/RequireAuth.component";
 // axios.defaults.withCredentials = true;
 
 const queryClient = new QueryClient({
@@ -44,10 +45,13 @@ const App = () => {
               />
 
               {/* private routes */}
-              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/" element={<RequireAuth />}>
+                <Route path="/dashboard" element={<DashboardPage />} />
+              </Route>
             </Routes>
           </Router>
 
+          {/* <ToastContainer position="bottom-right" autoClose={3000} /> */}
           <ToastContainer position="bottom-right" autoClose={3000} />
         </AuthProvider>
       </ThemeProvider>

@@ -7,7 +7,7 @@ const logout = require("../controllers/auth/logout");
 const forgotPassword = require("../controllers/auth/forgotPassword");
 const resetPassword = require("../controllers/auth/resetPassword");
 
-router.get("/is-logged-in", async (req, res) => {
+router.post("/is-logged-in", async (req, res) => {
   await isLoggedIn(req, res);
 });
 
@@ -15,7 +15,7 @@ router.post("/login", async (req, res) => {
   await login(req, res);
 });
 
-router.get("/logout", async (req, res) => {
+router.post("/logout", async (req, res) => {
   await logout(req, res);
 });
 

@@ -1,8 +1,7 @@
-import api from "./axios";
-
+import { Navigate } from "react-router-dom";
 export const isLoggedIn = async (data) => {
   try {
-    const res = await api.get("/api/auth/is-logged-in", data);
+    const res = await api.post("/api/auth/is-logged-in", data);
     return res;
   } catch (err) {
     return err.response;
@@ -29,12 +28,17 @@ export const login = async (data) => {
 };
 
 export const logout = async (data) => {
-  try {
-    const res = await api.get("/api/auth/logout", data);
-    return res;
-  } catch (err) {
-    return err.response;
-  }
+  // try {
+  //   const res = await api.post(
+  //     "/api/auth/logout",
+  //     { credentials: "same-origin" },
+  //     data
+  //   );
+  //   console.log("logout", res);
+  //   return res;
+  // } catch (err) {
+  //   return err.response;
+  // }
 };
 
 export const forgotPassword = async (data) => {

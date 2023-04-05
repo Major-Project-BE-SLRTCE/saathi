@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { TextField, MenuItem, Button } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
-import AuthLayout from "../../layout/AuthLayout.component";
 import { validationSchemaSignup } from "../../utils/validations";
 import { signup } from "../../utils/auth";
+import { toast } from "react-toastify";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -13,11 +13,10 @@ const SignupPage = () => {
   const [isSubmitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    // if already logged in, redirect to dashboard
-    if (auth.isLoggedIn) {
+    if (auth.user) {
       navigate("/dashboard");
     }
-  });
+  }, [auth.user, navigate]);
 
   document.title = "Register - Saathi";
 
@@ -38,11 +37,15 @@ const SignupPage = () => {
 
     const signupRes = await signup(signupData);
 
-    console.log(signupRes);
+    console.log("signupRes", signupRes);
 
     if (signupRes.status === 201) {
+      toast.success("Registered sucessfully!\nLogin to continue.");
       navigate("/login");
-    } else {
+    } else if (signupRes.status === 400) {
+      signupRes.data.message.forEach((error) => {
+        toast.error(error);
+      });
       console.log(`Sign Up Error: ${signupRes.data.message}`);
     }
 
@@ -64,7 +67,7 @@ const SignupPage = () => {
   });
 
   return (
-    <AuthLayout>
+    <>
       <h1>Register</h1>
 
       <form onSubmit={formik.handleSubmit}>
@@ -160,7 +163,7 @@ const SignupPage = () => {
           {!isSubmitting ? "Sign Up" : "Signing up..."}
         </Button>
       </form>
-    </AuthLayout>
+    </>
   );
 };
 

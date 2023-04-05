@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../auth/config");
-const Users = require("../models/usersModel");
+const Users = require("../models/users");
+require("dotenv").config();
 
 const auth = async (req, res, next) => {
   try {
@@ -13,7 +13,7 @@ const auth = async (req, res, next) => {
 
       next(message);
     } else {
-      const tokenData = jwt.verify(token, JWT_SECRET);
+      const tokenData = jwt.verify(token, process.env.JWT_SECRET);
       const { userId, exp } = tokenData;
 
       if (exp + 3600000 <= Date.now()) {

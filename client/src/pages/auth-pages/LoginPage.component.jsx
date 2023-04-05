@@ -3,23 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { TextField, Button } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
-import AuthLayout from "../../layout/AuthLayout.component";
 import { validationSchemaLogin } from "../../utils/validations";
 import { login } from "../../utils/auth";
-
+import useAxios from "../../hooks/useAxios";
 const LoginPage = () => {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
   const [isSubmitting, setSubmitting] = useState(false);
+  const axios = useAxios();
 
   useEffect(() => {
-    // if already logged in, redirect to dashboard
-    if (auth.isLoggedIn) {
+    if (auth.user) {
       navigate("/dashboard");
     }
-  });
-
-  document.title = "Login - Saathi";
+  }, [auth.user, navigate]);
 
   const styles = { marginBottom: "24px" };
 
@@ -33,19 +30,24 @@ const LoginPage = () => {
 
     console.log(loginData);
 
-    const loginRes = await login(loginData);
+    // const loginRes = await login(loginData);
+
+    const loginRes = await axios.post("/api/auth/login", loginData);
 
     console.log(loginRes);
 
     if (loginRes.status === 200) {
+      // setAuth({
+      //   ...auth,
+      //   isLoggedIn: true,
+      //   userId: loginRes.data.userId,
+      //   name: loginRes.data.name,
+      //   userType: loginRes.data.userType
+      // });
       setAuth({
-        ...auth,
-        isLoggedIn: true,
-        userId: loginRes.data.userId,
-        name: loginRes.data.name,
-        userType: loginRes.data.userType
+        accessToken: loginRes.data.accessToken,
+        user: loginRes.data.user
       });
-
       navigate("/dashboard");
     } else {
       console.log(`Login Error: ${loginRes.data.message}`);
@@ -66,7 +68,7 @@ const LoginPage = () => {
   });
 
   return (
-    <AuthLayout>
+    <>
       <h1>Login</h1>
 
       <form onSubmit={formik.handleSubmit}>
@@ -116,7 +118,7 @@ const LoginPage = () => {
           {!isSubmitting ? "Login" : "Logging in..."}
         </Button>
       </form>
-    </AuthLayout>
+    </>
   );
 };
 
