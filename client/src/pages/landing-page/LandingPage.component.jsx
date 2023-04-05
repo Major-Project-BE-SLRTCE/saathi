@@ -15,16 +15,9 @@ import {
 import ChatbotBackground from "../../assets/images/saathi_logos/7.png";
 
 const LandingPage = () => {
-  document.title = "Home - Saathi";
-
   return (
     <AnimatePresence>
-      <LandingContainer
-      // initial={{ opacity: 0 }}
-      // animate={{ opacity: 1 }}
-      // exit={{ opacity: 0 }}
-      // transition={{ duration: 1.5, ease: "easeOut" }}
-      >
+      <LandingContainer>
         <Grid container>
           <LandingHeader item xs={12} container spacing={2}>
             <LandingHeaderText item xs={12} sm={6}>

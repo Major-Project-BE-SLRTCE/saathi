@@ -6,7 +6,7 @@ import {
   NavbarRedirectLinkWrapper,
   NavbarRedirectLink
 } from "./Navbar.styled";
-import Button from "@mui/material/Button";
+import { AppBar, Button, Avatar, Container, Toolbar } from "@mui/material";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -18,31 +18,47 @@ const Navbar = () => {
     navigate("/");
   };
   return (
-    <NavbarContainer>
-      <NavbarLink to="/">Saathi</NavbarLink>
+    <AppBar
+      position="sticky"
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "4rem 1fr",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%"
+      }}>
+      <Container>
+        <Toolbar disableGutters>
+          <div>saathi</div>
+          <div>menu</div>
+        </Toolbar>
+      </Container>
+    </AppBar>
+    // <NavbarContainer>
+    //   <NavbarLink to="/">Saathi</NavbarLink>
 
-      <NavbarRedirectLinkWrapper>
-        {!auth?.user ? (
-          <>
-            <NavbarRedirectLink to="/login">Login</NavbarRedirectLink>
-            <NavbarRedirectLink to="/signup">Register</NavbarRedirectLink>
-            <NavbarRedirectLink to="/forgot-password">
-              Forgot Pwd.
-            </NavbarRedirectLink>
-            <NavbarRedirectLink to="/reset-password">
-              Reset Pwd.
-            </NavbarRedirectLink>
-          </>
-        ) : (
-          <>
-            <NavbarRedirectLink to="/dashboard">Dashboard</NavbarRedirectLink>
-            <Button variant="outlined" onClick={() => handleLogout()}>
-              Logout
-            </Button>
-          </>
-        )}
-      </NavbarRedirectLinkWrapper>
-    </NavbarContainer>
+    //   <NavbarRedirectLinkWrapper>
+    //     {!auth?.user ? (
+    //       <>
+    //         <NavbarRedirectLink to="/login">Login</NavbarRedirectLink>
+    //         <NavbarRedirectLink to="/signup">Register</NavbarRedirectLink>
+    //         <NavbarRedirectLink to="/forgot-password">
+    //           Forgot Pwd.
+    //         </NavbarRedirectLink>
+    //         <NavbarRedirectLink to="/reset-password">
+    //           Reset Pwd.
+    //         </NavbarRedirectLink>
+    //       </>
+    //     ) : (
+    //       <>
+    //         <NavbarRedirectLink to="/dashboard">Dashboard</NavbarRedirectLink>
+    //         <Button variant="outlined" onClick={() => handleLogout()}>
+    //           Logout
+    //         </Button>
+    //       </>
+    //     )}
+    //   </NavbarRedirectLinkWrapper>
+    // </NavbarContainer>
   );
 };
 
