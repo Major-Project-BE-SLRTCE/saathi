@@ -30,18 +30,10 @@ const ResetPasswordPage = () => {
       token
     };
 
-    console.log(resetPasswordData);
-
     const resetPasswordRes = await resetPassword(resetPasswordData);
-
-    console.log(resetPasswordRes);
-
     if (resetPasswordRes.status === 200) {
       navigate("/login");
-    } else {
-      console.log(`Reset Password Error: ${resetPasswordRes.data.message}`);
     }
-
     setSubmitting(false);
   };
 

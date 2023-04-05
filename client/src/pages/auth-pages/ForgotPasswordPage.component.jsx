@@ -29,17 +29,7 @@ const ForgotPasswordPage = () => {
       userType: data.userType
     };
 
-    console.log(forgotPasswordData);
-
     const forgotPasswordRes = await forgotPassword(forgotPasswordData);
-
-    console.log(forgotPasswordRes);
-
-    if (forgotPasswordRes.status === 200) {
-      console.log(forgotPasswordRes);
-    } else {
-      console.log(`Forgot Password Error: ${forgotPasswordRes.data.message}`);
-    }
 
     setSubmitting(false);
   };

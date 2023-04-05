@@ -28,29 +28,13 @@ const LoginPage = () => {
       password: data.password
     };
 
-    console.log(loginData);
-
-    // const loginRes = await login(loginData);
-
     const loginRes = await axios.post("/api/auth/login", loginData);
-
-    console.log(loginRes);
-
     if (loginRes.status === 200) {
-      // setAuth({
-      //   ...auth,
-      //   isLoggedIn: true,
-      //   userId: loginRes.data.userId,
-      //   name: loginRes.data.name,
-      //   userType: loginRes.data.userType
-      // });
       setAuth({
         accessToken: loginRes.data.accessToken,
         user: loginRes.data.user
       });
       navigate("/dashboard");
-    } else {
-      console.log(`Login Error: ${loginRes.data.message}`);
     }
 
     setSubmitting(false);

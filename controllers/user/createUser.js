@@ -6,7 +6,6 @@ const beautifySchemaErrorMsgs =
 
 const createUser = async (req, res) => {
   try {
-    console.log(req.body);
     const { userType, username, name, email, password } = req.body;
 
     // validating the password
@@ -33,7 +32,6 @@ const createUser = async (req, res) => {
       res.status(400).json({ message: passwordMsg, data: {} });
     }
   } catch (err) {
-    console.log("Create User Error:\n", err);
     res.status(400).json({
       error: true,
       message: Object.values(err.errors).map((e) => e.message)

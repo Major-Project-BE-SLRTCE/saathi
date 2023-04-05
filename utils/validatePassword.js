@@ -18,7 +18,6 @@ const validatePassword = (password) => {
       }
     }
   } catch (err) {
-    console.log("Error:\n", err);
     return [false, "Something went wrong."];
   }
 };

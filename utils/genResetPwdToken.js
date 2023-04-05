@@ -31,7 +31,6 @@ const genResetPwdToken = async (email) => {
 
     return token;
   } catch (err) {
-    console.log("Generate Reset Password Token Error:\n", err);
     return "error";
   }
 };

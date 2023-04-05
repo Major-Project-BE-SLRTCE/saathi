@@ -26,7 +26,6 @@ const updatePassword = async (req, res) => {
       res.status(400).json({ message: passwordMsg });
     }
   } catch (err) {
-    console.log("Update Password Error:\n", err);
     res.status(500).json({ error: "Something went wrong." });
   }
 };

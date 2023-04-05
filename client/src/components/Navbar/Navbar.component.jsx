@@ -17,7 +17,6 @@ const Navbar = () => {
     setAuth({});
     navigate("/");
   };
-  console.log("navbar", auth);
   return (
     <NavbarContainer>
       <NavbarLink to="/">Saathi</NavbarLink>

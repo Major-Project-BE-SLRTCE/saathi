@@ -11,7 +11,6 @@ export const isLoggedIn = async (data) => {
 export const signup = async (data) => {
   try {
     const res = await api.post("/api/user/create", data);
-    console.log(res);
     return res;
   } catch (err) {
     return err.response;
@@ -25,20 +24,6 @@ export const login = async (data) => {
   } catch (err) {
     return err.response;
   }
-};
-
-export const logout = async (data) => {
-  // try {
-  //   const res = await api.post(
-  //     "/api/auth/logout",
-  //     { credentials: "same-origin" },
-  //     data
-  //   );
-  //   console.log("logout", res);
-  //   return res;
-  // } catch (err) {
-  //   return err.response;
-  // }
 };
 
 export const forgotPassword = async (data) => {

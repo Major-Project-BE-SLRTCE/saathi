@@ -63,7 +63,6 @@ const login = async (req, res) => {
         .json({ message: "Entered username or email address is not found." });
     }
   } catch (err) {
-    console.log("Login Error:\n", err);
     res.status(500).json({ message: "Something went wrong." });
   }
 };

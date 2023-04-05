@@ -16,7 +16,6 @@ const readUser = async (req, res) => {
       res.status(400).json({ message: "User not found." });
     }
   } catch (err) {
-    console.log("Read User Error:\n", err);
     res.status(500).json({ message: "Something went wrong." });
   }
 };

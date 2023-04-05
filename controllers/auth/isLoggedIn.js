@@ -39,7 +39,6 @@ const isLoggedIn = async (req, res) => {
       res.status(401).json({ message: "Unauthorized." });
     }
   } catch (err) {
-    console.log("IsLoggedIn Error:\n", err);
     res.status(500).json({ message: "Something went wrong." });
   }
 };

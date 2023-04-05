@@ -11,7 +11,6 @@ const deleteUser = async (req, res) => {
       res.status(404).json({ message: "Account not deleted." });
     }
   } catch (err) {
-    console.log("Delete user Error:\n", err);
     res.status(500).json({ message: "Something went wrong." });
   }
 };

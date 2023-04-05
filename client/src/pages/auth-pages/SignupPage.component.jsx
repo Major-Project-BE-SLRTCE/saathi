@@ -33,12 +33,7 @@ const SignupPage = () => {
       password: data.password
     };
 
-    console.log(signupData);
-
     const signupRes = await signup(signupData);
-
-    console.log("signupRes", signupRes);
-
     if (signupRes.status === 201) {
       toast.success("Registered sucessfully!\nLogin to continue.");
       navigate("/login");
@@ -46,7 +41,6 @@ const SignupPage = () => {
       signupRes.data.message.forEach((error) => {
         toast.error(error);
       });
-      console.log(`Sign Up Error: ${signupRes.data.message}`);
     }
 
     setSubmitting(false);
