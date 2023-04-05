@@ -3,16 +3,13 @@ const Users = require("../models/users");
 require("dotenv").config();
 
 const auth = async (req, res, next) => {
-  try {
-    const token = req.cookies.jwt;
-
-    if (!token) {
-      const message = "No auth token found. Access denied.";
-
-      res.status(401).json({ message });
-
-      next(message);
-    } else {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
       const tokenData = jwt.verify(token, process.env.JWT_SECRET);
       const { userId, exp } = tokenData;
 
@@ -35,8 +32,13 @@ const auth = async (req, res, next) => {
 
         next(message);
       }
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: "Not authorized. Token invalid." });
     }
-  } catch (err) {
+  }
+
+  if (!token) {
     const message = "Unauthorized: No auth token provided.";
 
     res.status(401).json({ message });
