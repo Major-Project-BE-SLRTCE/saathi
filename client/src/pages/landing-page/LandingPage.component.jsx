@@ -10,11 +10,13 @@ import {
   LandingHeaderImageWrapper,
   Cursive,
   AboutSection,
-  AboutSectionTitle,
+  AboutSectionTitle
 } from "./LandingPage.styled";
-import Wave2 from "../../assets/images/wave2.svg";
 import ChatbotBackground from "../../assets/images/saathi_logos/7.png";
+
 const LandingPage = () => {
+  document.title = "Home - Saathi";
+
   return (
     <AnimatePresence>
       <LandingContainer
@@ -32,11 +34,11 @@ const LandingPage = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1, y: -20 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 1, ease: "easeOut" }}
-                  >
+                    transition={{ duration: 1, ease: "easeOut" }}>
                     <LandingHeaderTitle>Saathi</LandingHeaderTitle>
                   </motion.div>
                 </Grid>
+
                 <Grid item xs={12}>
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -45,9 +47,8 @@ const LandingPage = () => {
                     transition={{
                       delay: 0.5,
                       duration: 0.75,
-                      ease: "easeOut",
-                    }}
-                  >
+                      ease: "easeOut"
+                    }}>
                     <LandingHeaderSubtitle>
                       Your <Cursive>personal</Cursive> chat companion, available
                       for you 24/7.
@@ -56,17 +57,18 @@ const LandingPage = () => {
                 </Grid>
               </Grid>
             </LandingHeaderText>
+
             <LandingHeaderImageWrapper item xs={12} sm={6}>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, y: -20 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 1, ease: "easeOut" }}
-              >
+                transition={{ duration: 1, ease: "easeOut" }}>
                 <LandingHeaderImage src={ChatbotBackground} />
               </motion.div>
             </LandingHeaderImageWrapper>
           </LandingHeader>
+
           <AboutSection item xs={12} container>
             <AboutSectionTitle item xs={12}>
               What is Saathi?

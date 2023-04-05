@@ -1,6 +1,7 @@
-import axios from "../utils/axios";
+import api from "../utils/axios";
 
 const useAxios = () => {
-  return axios;
+  return api;
 };
+
 export default useAxios;

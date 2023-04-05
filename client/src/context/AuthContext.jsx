@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-
 import { isLoggedIn } from "../utils/auth";
 
 const AuthContext = createContext();
@@ -9,7 +8,7 @@ export const AuthProvider = ({ children }) => {
     isLoggedIn: false,
     userId: "",
     name: "",
-    userType: "",
+    userType: ""
   });
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export const AuthProvider = ({ children }) => {
           isLoggedIn: true,
           userId: res.data.userId,
           name: res.data.name,
-          userType: res.data.userType,
+          userType: res.data.userType
         });
       }
     };

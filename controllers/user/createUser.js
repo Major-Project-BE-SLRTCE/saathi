@@ -5,6 +5,7 @@ const beautifySchemaErrorMsgs = require("../../utils/beautifySchemaErrorMsgs");
 
 const createUser = async (req, res) => {
   try {
+    console.log(req.body);
     const { userType, username, name, email, password } = req.body;
 
     // validating the password

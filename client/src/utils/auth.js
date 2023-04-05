@@ -1,19 +1,8 @@
-// import useAxios from "../hooks/useAxios";
-// import useQuery from "react-query";
-import axios from "./axios";
+import api from "./axios";
 
-export const forgotPassword = async (data) => {
+export const isLoggedIn = async (data) => {
   try {
-    const res = await axios.put(`/password/forgot`, data);
-    return res;
-  } catch (err) {
-    return err.response;
-  }
-};
-
-export const login = async (data) => {
-  try {
-    const res = await axios.post("/auth/login", data);
+    const res = await api.get("/api/auth/is-logged-in", data);
     return res;
   } catch (err) {
     return err.response;
@@ -22,7 +11,26 @@ export const login = async (data) => {
 
 export const signup = async (data) => {
   try {
-    const res = await axios.post("/auth/create", data);
+    const res = await api.post("/api/user/create", data);
+    console.log(res);
+    return res;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+export const login = async (data) => {
+  try {
+    const res = await api.post("/api/auth/login", data);
+    return res;
+  } catch (err) {
+    return err.response;
+  }
+};
+
+export const forgotPassword = async (data) => {
+  try {
+    const res = await api.post("api/auth/forgot-password", data);
     return res;
   } catch (err) {
     return err.response;
@@ -31,25 +39,7 @@ export const signup = async (data) => {
 
 export const resetPassword = async (data) => {
   try {
-    const res = await axios.put("/password/reset", data);
-    return res;
-  } catch (err) {
-    return err.response;
-  }
-};
-
-export const logout = async () => {
-  try {
-    const res = await axios.get("/auth/logout");
-    return res;
-  } catch (err) {
-    return err.response;
-  }
-};
-
-export const isLoggedIn = async () => {
-  try {
-    const res = await axios.get("/auth/is-logged-in");
+    const res = await api.post("api/auth/reset-password", data);
     return res;
   } catch (err) {
     return err.response;

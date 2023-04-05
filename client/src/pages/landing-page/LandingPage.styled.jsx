@@ -1,11 +1,8 @@
 import styled from "styled-components";
-import ChatbotBackground from "../../assets/images/chatbot-no-bg.png";
-import ChatBubbleBackground from "../../assets/images/chat_bubble.jpg";
-import ForestBackground from "../../assets/images/forest.jpg";
 import Wave2 from "../../assets/images/wave2.svg";
-
 import { Grid } from "@mui/material";
 import { motion } from "framer-motion";
+
 export const LandingContainer = styled(motion.div)`
   display: flex;
   align-items: center;

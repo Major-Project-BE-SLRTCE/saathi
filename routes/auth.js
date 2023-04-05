@@ -1,10 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
+const isLoggedIn = require("../controllers/auth/isLoggedIn");
 const login = require("../controllers/auth/login");
 const logout = require("../controllers/auth/logout");
 const forgotPassword = require("../controllers/auth/forgotPassword");
 const resetPassword = require("../controllers/auth/resetPassword");
+
+router.get("/is-logged-in", async (req, res) => {
+  await isLoggedIn(req, res);
+});
 
 router.post("/login", async (req, res) => {
   await login(req, res);

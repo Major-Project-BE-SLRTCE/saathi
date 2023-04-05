@@ -5,8 +5,8 @@ const sendEmail = require("../../utils/sendEmail");
 
 const forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
-    const findEmail = await User.findOne({ email });
+    const { email, userType } = req.body;
+    const findEmail = await User.findOne({ email, userType });
 
     // if entered email address exists
     // then generate token to reset the password
@@ -24,7 +24,11 @@ const forgotPassword = async (req, res) => {
         res.status(500).json({ message: "Something went wrong." });
       }
     } else {
-      res.status(404).json({ message: "Email address does not exists." });
+      res
+        .status(404)
+        .json({
+          message: "Combination of email address and user type does not exists."
+        });
     }
   } catch (err) {
     console.log("Forgot Password Error:\n", err);

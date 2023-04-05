@@ -1,4 +1,4 @@
-const Users = require("../../models/Users");
+const Users = require("../../models/users");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../../utils/config");
 
@@ -11,7 +11,7 @@ const isLoggedIn = async (req, res) => {
     // if the user is already logged in
     if (authToken) {
       const authTokenData = jwt.verify(authToken, JWT_SECRET);
-      const { userId, username, exp } = authTokenData;
+      const { userId, exp } = authTokenData;
 
       if (exp + 600000 <= Date.now()) {
         const userDetails = await Users.findOne(

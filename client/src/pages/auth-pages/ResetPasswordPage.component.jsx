@@ -1,77 +1,65 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import * as yup from "yup";
-
 import { TextField, Button } from "@mui/material";
-
-import { AlertNotification } from "../utils/Notifications";
-
+import useAuth from "../../hooks/useAuth";
+import AuthLayout from "../../layout/AuthLayout.component";
+import { validationSchemaResetPassword } from "../../utils/validations";
 import { resetPassword } from "../../utils/auth";
 
-import "./css/reset-password.css";
-
-const ResetPassword = () => {
+const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const { token } = useParams();
-  const [openAlert, setOpenAlert] = useState(false);
-  const [message, setMessage] = useState("");
+  const { auth } = useAuth();
   const [isSubmitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    // if already logged in, redirect to dashboard
+    if (auth.isLoggedIn) {
+      navigate("/dashboard");
+    }
+  });
 
   document.title = "Reset Password - Saathi";
 
-  const validationSchema = yup.object({
-    password: yup
-      .string()
-      .required("Required")
-      .min(8, "Must be at least 8 characters")
-      .max(20, "Must be at most 20 characters"),
-  });
+  const styles = { marginBottom: "24px" };
 
-  const handleResetPassword = async (values) => {
+  const handleResetPassword = async (data) => {
     setSubmitting(true);
-    setOpenAlert(false);
 
-    const resetPasswordRes = await resetPassword({
-      password: values.password,
-      token,
-    });
+    const resetPasswordData = {
+      password: data.password,
+      token
+    };
 
-    if (resetPasswordRes.status === 201) {
-      navigate("/auth/login");
+    console.log(resetPasswordData);
+
+    const resetPasswordRes = await resetPassword(resetPasswordData);
+
+    console.log(resetPasswordRes);
+
+    if (resetPasswordRes.status === 200) {
+      navigate("/login");
     } else {
-      setMessage(resetPasswordRes.data.message);
-      setOpenAlert(true);
+      console.log(`Reset Password Error: ${resetPasswordRes.data.message}`);
     }
 
     setSubmitting(false);
   };
 
-  const styles = {
-    marginBottom: "24px",
-  };
-
   const formik = useFormik({
     initialValues: {
-      password: "",
+      password: ""
     },
-    validationSchema,
+    validationSchema: validationSchemaResetPassword,
     onSubmit: async (values) => {
       handleResetPassword(values);
-    },
+    }
   });
 
   return (
-    <div className="auth">
-      <span className="auth-title">Reset Password</span>
-
-      <AlertNotification
-        openAlert={openAlert}
-        setOpenAlert={setOpenAlert}
-        severity="error"
-        styles={styles}
-        message={message}
-      />
+    <AuthLayout>
+      <h1>Reset Password</h1>
 
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -95,13 +83,12 @@ const ResetPassword = () => {
           fullWidth
           style={{ marginTop: "12px" }}
           type="submit"
-          disabled={isSubmitting}
-        >
+          disabled={isSubmitting}>
           {!isSubmitting ? "Reset Password" : "Resetting password..."}
         </Button>
       </form>
-    </div>
+    </AuthLayout>
   );
 };
 
-export default ResetPassword;
+export default ResetPasswordPage;
