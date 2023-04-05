@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import {
   NavbarContainer,
@@ -5,11 +6,30 @@ import {
   NavbarRedirectLinkWrapper,
   NavbarRedirectLink
 } from "./Navbar.styled";
+import Button from "@mui/material/Button";
+import { logout } from "../../utils/auth";
 
 const Navbar = () => {
-  const { auth } = useAuth();
+  const navigate = useNavigate();
+  const { auth, setAuth } = useAuth();
 
-  // console.log(auth);
+  const handleLogout = async () => {
+    const logoutRes = await logout();
+
+    if (logoutRes.status === 200) {
+      setAuth({
+        ...auth,
+        isLoggedIn: false,
+        userId: "",
+        name: "",
+        userType: ""
+      });
+
+      navigate("/login");
+    } else {
+      console.log("Logout Error:", logoutRes.data.message);
+    }
+  };
 
   return (
     <NavbarContainer>
@@ -28,7 +48,12 @@ const Navbar = () => {
             </NavbarRedirectLink>
           </>
         ) : (
-          <NavbarRedirectLink to="/dashboard">Dashboard</NavbarRedirectLink>
+          <>
+            <NavbarRedirectLink to="/dashboard">Dashboard</NavbarRedirectLink>
+            <Button variant="outlined" onClick={handleLogout}>
+              Logout
+            </Button>
+          </>
         )}
       </NavbarRedirectLinkWrapper>
     </NavbarContainer>

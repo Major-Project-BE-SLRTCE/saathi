@@ -28,6 +28,15 @@ export const login = async (data) => {
   }
 };
 
+export const logout = async (data) => {
+  try {
+    const res = await api.get("/api/auth/logout", data);
+    return res;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 export const forgotPassword = async (data) => {
   try {
     const res = await api.post("api/auth/forgot-password", data);
