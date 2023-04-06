@@ -12,10 +12,11 @@ export const NavbarContainer = styled.div`
 `;
 
 export const NavbarLink = styled(Link)`
-  color: #000;
   font-size: 1.5rem;
   font-weight: bold;
   text-decoration: none;
+  color: #fff;
+  letter-spacing: 0.1rem;
 `;
 
 export const NavbarRedirectLinkWrapper = styled.div`

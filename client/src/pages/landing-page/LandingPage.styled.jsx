@@ -19,7 +19,7 @@ export const LandingHeader = styled(Grid)`
 
   @media only screen and (min-width: 600px) {
     text-align: left;
-    padding: 0 2rem;
+    padding: 0 10rem;
     padding-bottom: 30vh;
   }
 `;
