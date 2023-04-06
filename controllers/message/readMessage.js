@@ -4,15 +4,22 @@ const beautifySchemaErrorMsgs = require("../../utils/beautifySchemaErrorMsgs");
 // --the function is not completed
 const readMessage = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { userId, skipCount } = req.body;
 
     // retrieving recent 50 messages of a specific user
     const messages = await Message.find({ userId })
       .sort({ timestamp: -1 })
-      .limit(50);
+      .limit(50)
+      .skip(skipCount);
 
     if (messages) {
-      res.status(201).json({ message: "Messages fetched.", messages });
+      res
+        .status(201)
+        .json({
+          message: "Messages fetched.",
+          count: messages.length,
+          messages
+        });
     } else {
       res.status(500).json({ message: "Messages not fetched." });
     }
