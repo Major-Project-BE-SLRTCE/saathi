@@ -1,15 +1,17 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ThemeProvider } from "styled-components";
 import { AuthProvider } from "./context/AuthProvider";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 // import axios from "axios";
 
 import Navbar from "./components/Navbar/Navbar.component";
 import LandingPage from "./pages/landing-page/LandingPage.component";
-import LoginPage from "./pages/auth-pages/LoginPage.component";
+import LoginPage from "./pages/auth-pages/LoginPage/LoginPage.component";
 import SignupPage from "./pages/auth-pages/SignupPage.component";
 import ForgotPasswordPage from "./pages/auth-pages/ForgotPasswordPage.component";
 import ResetPasswordPage from "./pages/auth-pages/ResetPasswordPage.component";
@@ -35,7 +37,6 @@ const App = () => {
           <AuthProvider>
             <Router>
               <Navbar />
-
               <Routes>
                 {/* public routes */}
                 <Route path="/" element={<LandingPage />} />
@@ -58,10 +59,31 @@ const App = () => {
             </Router>
 
             {/* <ToastContainer position="bottom-right" autoClose={3000} /> */}
-            <ToastContainer position="bottom-right" autoClose={3000} />
+            <ToastContainer
+              // draggable={false}
+              // toastStyle={{
+              //   backgroundColor: "#333",
+              //   opacity: 0.9,
+              //   color: "#fff",
+              //   fontSize: "1.2rem"
+              // }}
+              position="bottom-right"
+              autoClose={3000}
+            />
           </AuthProvider>
         </MuiThemeProvider>
       </ThemeProvider>
+      <ReactQueryDevtools
+        position="bottom-right"
+        panelProps={{
+          style: {
+            position: "absolute",
+            bottom: 0,
+            right: 0
+          }
+        }}
+        initialIsOpen={false}
+      />
     </QueryClientProvider>
   );
 };

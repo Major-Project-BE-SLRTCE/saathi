@@ -15,6 +15,7 @@ const styledTheme = {
 
 const muiTheme = createTheme({
   palette: {
+    mode: "dark",
     primary: {
       light: "#4caf50",
       main: "#388E3C",
@@ -39,6 +40,19 @@ const muiTheme = createTheme({
           src: local('Inter'), url(${InterFont})  format("opentype");
         }
       `
+    }
+  },
+  overrides: {
+    MuiInputLabel: {
+      // Name of the component ⚛️ / style sheet
+      root: {
+        // Name of the rule
+        color: "orange",
+        "&$focused": {
+          // increase the specificity for the pseudo class
+          color: "blue"
+        }
+      }
     }
   }
 });

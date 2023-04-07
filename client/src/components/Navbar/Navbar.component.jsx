@@ -13,23 +13,44 @@ import {
   Container,
   Toolbar,
   Grid,
-  Typography
+  Typography,
+  useScrollTrigger
 } from "@mui/material";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 10
+  });
   const handleLogout = () => {
     localStorage.removeItem("ACCESS_TOKEN");
     localStorage.removeItem("USER");
     setAuth({});
     navigate("/");
   };
+  const appBarStyle = trigger
+    ? {
+        backgroundColor: "primary.accent",
+        width: "90%",
+        margin: "auto",
+        borderRadius: 4,
+        opacity: 0.9,
+        top: "0.5rem"
+      }
+    : {
+        backgroundColor: "primary.dark",
+        width: "100%",
+        borderRadius: 0,
+        opacity: 1
+      };
   return (
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: "primary.dark"
+        ...appBarStyle,
+        transition: "all 0.2s ease-in-out"
       }}>
       <Container maxWidth="lg">
         <Toolbar>
