@@ -34,7 +34,7 @@ export const LandingHeaderTitle = styled(Grid)`
   // font-family: "Montserrat", sans-serif;
   font-family: "Sacramento", cursive;
   font-weight: 100;
-  color: ${({ theme }) => theme.background.accentLight};
+  color: ${({ theme }) => theme.background.contrastText};
 `;
 
 export const LandingHeaderSubtitle = styled(Grid)`
@@ -63,13 +63,13 @@ const moveBg = keyframes`
 `;
 
 export const Cursive = styled.span`
-  --color-one: #ff9500;
-  --color-two: #00a6ff;
+  --color-one: #b50000;
+  --color-two: #00059e;
   --bg-size: 400%;
-  /* font-family: "Sacramento", cursive; */
-  /* font-size: 2.25rem; */
+  font-family: "Sacramento", cursive;
+  font-size: 3rem;
   background: linear-gradient(
-      90deg,
+      270deg,
       var(--color-one),
       var(--color-two),
       var(--color-one)
@@ -78,7 +78,8 @@ export const Cursive = styled.span`
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  animation: 4s ${moveBg} infinite linear;
+  animation: 8s ${moveBg} infinite linear;
+  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
 `;
 
 export const AboutSection = styled(Grid)`

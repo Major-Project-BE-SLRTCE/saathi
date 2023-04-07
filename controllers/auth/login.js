@@ -52,7 +52,7 @@ const login = async (req, res) => {
             }
           });
         } else {
-          res.status(400).json({ message: "Password not matched." });
+          res.status(401).json({ message: "Password not matched." });
         }
       } else {
         res.status(400).json({ message: passwordError });

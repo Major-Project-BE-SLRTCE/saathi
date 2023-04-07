@@ -3,22 +3,28 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import {
   TextField,
+  MenuItem,
   Button,
   Grid,
   Typography,
-  CircularProgress
+  CircularProgress,
+  Autocomplete
 } from "@mui/material";
-import LoginIcon from "@mui/icons-material/Login";
+import ForumIcon from "@mui/icons-material/Forum";
 import InputIcon from "@mui/icons-material/Input";
+
 import useAuth from "../../../hooks/useAuth";
-import { validationSchemaLogin } from "../../../utils/validations";
-import { login } from "../../../utils/auth";
 import useAxios from "../../../hooks/useAxios";
+
+import { validationSchemaSignup } from "../../../utils/validations";
+import { signup } from "../../../utils/auth";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
-const LoginPage = () => {
+
+const SignupPage = () => {
   const navigate = useNavigate();
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
   const [isSubmitting, setSubmitting] = useState(false);
   const axios = useAxios();
 
@@ -27,37 +33,43 @@ const LoginPage = () => {
       navigate("/dashboard");
     }
   }, [auth.user, navigate]);
-
-  const handleLogin = async (data) => {
+  const handleSignup = async (data) => {
     setSubmitting(true);
-    const loginData = {
-      usernameOrEmail: data.usernameOrEmail,
+
+    const signupData = {
+      name: data.name,
+      username: data.username,
+      email: data.email,
+      userType: data.userType === "Patient" ? "chatter" : "doctor",
       password: data.password
     };
+
     try {
-      const loginRes = await axios.post("/api/auth/login", loginData);
-      console.log("loginRes: ", loginRes);
-      setAuth({
-        accessToken: loginRes.data.accessToken,
-        user: loginRes.data.user
-      });
-      toast.success("Login successful");
-      navigate("/dashboard");
-    } catch (error) {
-      setAuth({});
+      // const signupRes = await signup(signupData)
+      const signupRes = await axios.post("/api/user/create", signupData);
+      console.log(signupRes);
       setSubmitting(false);
-      toast.error(error.response.data.message || "Something went wrong");
+      toast.success("Registered sucessfully!\nLogin to continue.");
+      navigate("/login");
+    } catch (error) {
+      setSubmitting(false);
+      signupRes.data.message.forEach((error) => {
+        toast.error(error);
+      });
     }
   };
 
   const formik = useFormik({
     initialValues: {
-      usernameOrEmail: "",
+      name: "",
+      username: "",
+      email: "",
+      userType: "",
       password: ""
     },
-    validationSchema: validationSchemaLogin,
+    validationSchema: validationSchemaSignup,
     onSubmit: async (values) => {
-      handleLogin(values);
+      handleSignup(values);
     }
   });
 
@@ -91,8 +103,8 @@ const LoginPage = () => {
                 gap: "2rem",
                 alignItems: "center"
               }}>
-              <LoginIcon fontSize="10rem" />
-              Login
+              <ForumIcon fontSize="10rem" />
+              Sign Up
             </Typography>
           </motion.div>
         </Grid>
@@ -120,27 +132,80 @@ const LoginPage = () => {
                     fullWidth
                     required
                     type="text"
-                    name="usernameOrEmail"
-                    label="Username or Email"
-                    placeholder="Enter your username or email"
-                    value={formik.values.usernameOrEmail}
+                    name="name"
+                    label="Name"
+                    placeholder="Enter your name"
+                    value={formik.values.name}
                     onChange={formik.handleChange}
-                    error={
-                      formik.touched.usernameOrEmail &&
-                      Boolean(formik.errors.usernameOrEmail)
-                    }
-                    helperText={
-                      formik.touched.usernameOrEmail &&
-                      formik.errors.usernameOrEmail
-                    }
+                    error={formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name}
                     disabled={isSubmitting}
                     autoFocus
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    fullWidth
                     color="secondary"
+                    fullWidth
+                    required
+                    type="text"
+                    name="username"
+                    label="Username"
+                    placeholder="Enter your username"
+                    value={formik.values.username}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.username && Boolean(formik.errors.username)
+                    }
+                    helperText={
+                      formik.touched.username && formik.errors.username
+                    }
+                    disabled={isSubmitting}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    color="secondary"
+                    fullWidth
+                    required
+                    type="text"
+                    name="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                    disabled={isSubmitting}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    color="secondary"
+                    select
+                    fullWidth
+                    required
+                    type="text"
+                    name="userType"
+                    label="Type of user"
+                    placeholder="Enter your userType"
+                    value={formik.values.userType}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.userType && Boolean(formik.errors.userType)
+                    }
+                    helperText={
+                      formik.touched.userType && formik.errors.userType
+                    }
+                    disabled={isSubmitting}>
+                    <MenuItem value="chatter">Patient</MenuItem>
+                    <MenuItem value="doctor">Doctor</MenuItem>
+                  </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    color="secondary"
+                    fullWidth
                     required
                     type="password"
                     name="password"
@@ -165,10 +230,10 @@ const LoginPage = () => {
                     disabled={isSubmitting}
                     endIcon={<InputIcon />}
                     sx={{
-                      width: "10rem"
+                      width: "max(max-content, 10rem)"
                     }}>
                     {!isSubmitting ? (
-                      <Typography>Login</Typography>
+                      <Typography>Create an account</Typography>
                     ) : (
                       <Typography>
                         <CircularProgress size={10} color="secondary" />
@@ -185,4 +250,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

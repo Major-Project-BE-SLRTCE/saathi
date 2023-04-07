@@ -9,7 +9,7 @@
     "lint-staged": "lint-staged",
     "eslint:fix": "eslint --quiet --fix",
     "prettier:fix": "prettier --write --ignore-unknown",
-    "server": "nodemon index.js",
+    "server": "nodemon --ignore client/ index.js",
     "client": "yarn --cwd ./client dev",
     "app": "concurrently \"yarn run server\" \"yarn run client\""
   },

@@ -13,8 +13,15 @@ import {
   AboutSectionTitle
 } from "./LandingPage.styled";
 import ChatbotBackground from "../../assets/images/saathi_logos/7.png";
+import { Button, Typography } from "@mui/material";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+
+import { useNavigate, Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  const { auth } = useAuth();
   return (
     <AnimatePresence>
       <LandingContainer>
@@ -43,10 +50,25 @@ const LandingPage = () => {
                       ease: "easeOut"
                     }}>
                     <LandingHeaderSubtitle>
-                      Your <Cursive>personal</Cursive> chat companion, available
-                      for you 24/7.
+                      Your
+                      <p>
+                        <Cursive>personal</Cursive>
+                      </p>
+                      chat companion, available for you 24/7.
                     </LandingHeaderSubtitle>
                   </motion.div>
+                </Grid>
+
+                <Grid item xs={12}>
+                  {auth.user ? (
+                    <StyledButton to="/dashboard">
+                      <Typography variant="button">Go to Dashboard</Typography>
+                    </StyledButton>
+                  ) : (
+                    <StyledButton to="/signup">
+                      <Typography variant="button">Get started</Typography>
+                    </StyledButton>
+                  )}
                 </Grid>
               </Grid>
             </LandingHeaderText>
@@ -74,3 +96,19 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
+const StyledButton = ({ children, to }) => (
+  <Button
+    className="box"
+    size="large"
+    variant="contained"
+    color="primary"
+    LinkComponent={Link}
+    to={to}
+    endIcon={<KeyboardArrowRightIcon />}
+    sx={{
+      fontSize: "1.15rem"
+    }}>
+    {children}
+  </Button>
+);

@@ -12,7 +12,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import Navbar from "./components/Navbar/Navbar.component";
 import LandingPage from "./pages/landing-page/LandingPage.component";
 import LoginPage from "./pages/auth-pages/LoginPage/LoginPage.component";
-import SignupPage from "./pages/auth-pages/SignupPage.component";
+import SignupPage from "./pages/auth-pages/SignupPage/SignupPage.component";
 import ForgotPasswordPage from "./pages/auth-pages/ForgotPasswordPage.component";
 import ResetPasswordPage from "./pages/auth-pages/ResetPasswordPage.component";
 import DashboardPage from "./pages/dashboard-page/DashboardPage.component";
@@ -73,7 +73,7 @@ const App = () => {
           </AuthProvider>
         </MuiThemeProvider>
       </ThemeProvider>
-      <ReactQueryDevtools
+      {/* <ReactQueryDevtools
         position="bottom-right"
         panelProps={{
           style: {
@@ -83,7 +83,7 @@ const App = () => {
           }
         }}
         initialIsOpen={false}
-      />
+      /> */}
     </QueryClientProvider>
   );
 };
