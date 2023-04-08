@@ -170,7 +170,7 @@ const Navbar = () => {
                   <Button
                     variant="text"
                     color="secondary"
-                    sx={{ mr: 1, color: "primary.contrastText" }}
+                    sx={{ mr: 1, color: "secondary.contrastText" }}
                     onClick={() => handleLogout()}>
                     Logout
                   </Button>
