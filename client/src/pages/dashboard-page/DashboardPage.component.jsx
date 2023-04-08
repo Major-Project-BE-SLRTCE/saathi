@@ -15,13 +15,25 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { padding } from "@mui/system";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 const drawerWidth = 240;
 
-export default function Dashboard() {
+import LogoutIcon from "@mui/icons-material/Logout";
+
+const Dashboard = () => {
+  const [activeTab, setActiveTab] = React.useState(0);
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
+  const handleLogout = () => {
+    localStorage.removeItem("ACCESS_TOKEN");
+    localStorage.removeItem("USER");
+    setAuth({});
+    navigate("/");
+  };
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-
       <Drawer
         sx={{
           width: drawerWidth,
@@ -46,40 +58,23 @@ export default function Dashboard() {
         <AnimatePresence>
           <Toolbar />
           <Divider />
+
           <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem
-                key={text}
-                disablePadding
-                component={motion.li}
-                initial={{ opacity: 0, x: 200 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 200 }}
-                transition={{
-                  delay: index * 0.05,
-                  type: "tween"
-                }}>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
+            <ListItem
+              component={motion.li}
+              initial={{ opacity: 0, x: -200 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -200 }}
+              transition={{
+                type: "tween"
+              }}>
+              <ListItemButton onClick={handleLogout}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary={"Logout"} />
+              </ListItemButton>
+            </ListItem>
           </List>
         </AnimatePresence>
       </Drawer>
@@ -88,4 +83,6 @@ export default function Dashboard() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Dashboard;

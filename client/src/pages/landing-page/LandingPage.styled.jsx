@@ -83,7 +83,7 @@ export const Cursive = styled.span`
 `;
 
 export const AboutSection = styled(Grid)`
-  background-image: linear-gradient(0deg, #1b5e20, #388e3c);
+  background-image: linear-gradient(0deg, #007d59, #00684a);
   min-height: 70vh;
 `;
 

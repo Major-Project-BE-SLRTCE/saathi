@@ -116,7 +116,6 @@ const LoginPage = () => {
               <Grid container spacing={4}>
                 <Grid item xs={12}>
                   <TextField
-                    color="secondary"
                     fullWidth
                     required
                     type="text"
@@ -140,7 +139,6 @@ const LoginPage = () => {
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
-                    color="secondary"
                     required
                     type="password"
                     name="password"
@@ -160,7 +158,6 @@ const LoginPage = () => {
                 <Grid item xs={12}>
                   <Button
                     variant="outlined"
-                    color="secondary"
                     type="submit"
                     disabled={isSubmitting}
                     endIcon={<InputIcon />}

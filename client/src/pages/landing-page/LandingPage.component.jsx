@@ -85,7 +85,7 @@ const LandingPage = () => {
           </LandingHeader>
 
           <AboutSection item xs={12} container>
-            <AboutSectionTitle item xs={12}>
+            <AboutSectionTitle as={Typography} variant="h3" item xs={12}>
               What is Saathi?
             </AboutSectionTitle>
           </AboutSection>
