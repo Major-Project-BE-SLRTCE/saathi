@@ -53,9 +53,8 @@ const SignupPage = () => {
       navigate("/login");
     } catch (error) {
       setSubmitting(false);
-      error.response.data.message.forEach((error) => {
-        toast.error(error);
-      });
+      // console.error(error);
+      toast.error(error.response.data.message);
     }
   };
 
