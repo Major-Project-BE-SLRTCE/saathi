@@ -44,9 +44,11 @@ app.get("/", (req, res) => {
 
 const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
+const predictionRoutes = require("./routes/prediction");
 
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/prediction", predictionRoutes);
 
 // ----------------------------------------------
 
