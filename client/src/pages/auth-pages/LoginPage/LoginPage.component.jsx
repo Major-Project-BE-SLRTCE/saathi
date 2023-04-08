@@ -85,7 +85,7 @@ const LoginPage = () => {
             <Typography
               variant="h2"
               sx={{
-                color: "secondary.light",
+                color: "secondary.contrastText",
                 display: "grid",
                 gridTemplateColumns: "max-content max-content",
                 gap: "2rem",
@@ -157,7 +157,7 @@ const LoginPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     type="submit"
                     disabled={isSubmitting}
                     endIcon={<InputIcon />}

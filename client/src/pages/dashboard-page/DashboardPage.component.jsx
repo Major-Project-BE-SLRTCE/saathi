@@ -42,7 +42,9 @@ const Dashboard = () => {
             width: drawerWidth,
             boxSizing: "border-box",
             borderRadius: 2,
-            border: "none",
+            border: "1px solid rgba( 255, 255, 255, 0.18 )",
+            backdropFilter: "blur( 5px )",
+            WebkitBackdropFilter: "blur( 5px )",
             boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.1)",
             background:
               "linear-gradient(45deg, #ffffff55 10%, rgba(255,255,255,0.1) 80%, #ffffff70)",

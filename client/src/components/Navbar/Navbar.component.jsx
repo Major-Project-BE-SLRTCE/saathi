@@ -29,7 +29,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-
+import TryIcon from "@mui/icons-material/Try";
 const drawerWidth = 240;
 
 const Navbar = () => {
@@ -48,12 +48,16 @@ const Navbar = () => {
   };
   const appBarStyle = trigger
     ? {
+        background: "rgba( 255, 255, 255, 0.25 )",
+        backdropFilter: "blur( 20px )",
+        webkitBackdropFilter: "blur( 20px )",
+        border: "1px solid rgba( 255, 255, 255, 0.18 )",
         backgroundColor: "primary.accent",
-        width: "90%",
+        width: "80%",
         margin: "auto",
         borderRadius: 4,
-        opacity: 0.9,
-        top: "0.5rem"
+        top: "0.5rem",
+        boxShadow: "0 8px 32px 0 rgba( 31, 38, 50, 0.1 )"
       }
     : {
         background: "transparent",
@@ -77,7 +81,8 @@ const Navbar = () => {
       sx={{
         ...appBarStyle,
         transition: "all 0.2s ease-in-out"
-      }}>
+      }}
+      elevation={0}>
       <Container maxWidth="lg">
         <Toolbar>
           <Grid
@@ -88,13 +93,20 @@ const Navbar = () => {
               justifyContent: "space-between"
             }}>
             <Grid item xs={2}>
-              <Typography
-                variant="h6"
-                sx={{
-                  color: "primary.contrastText"
-                }}>
-                <NavbarLink to="/">Saathi</NavbarLink>
-              </Typography>
+              <NavbarLink to="/">
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontSize: "1.5rem",
+                    color: "secondary.contrastText",
+                    display: "grid",
+                    gridTemplateColumns: "max-content max-content",
+                    gap: "1rem",
+                    placeItems: "center"
+                  }}>
+                  <TryIcon /> Saathi
+                </Typography>
+              </NavbarLink>
             </Grid>
             <Grid
               item
@@ -108,31 +120,40 @@ const Navbar = () => {
                   <Button
                     variant="text"
                     color="secondary"
-                    sx={{ mr: 1, color: "primary.contrastText" }}
+                    sx={{
+                      mr: 1,
+                      color: "secondary.contrastText"
+                    }}
                     onClick={() => navigate("/login")}>
                     Login
                   </Button>
                   <Button
                     variant="text"
                     color="secondary"
-                    sx={{ mr: 1, color: "primary.contrastText" }}
+                    sx={{
+                      mr: 1,
+                      color: "secondary.contrastText"
+                    }}
                     onClick={() => navigate("/signup")}>
                     Register
                   </Button>
                   <Button
                     variant="text"
                     color="secondary"
-                    sx={{ mr: 1, color: "primary.contrastText" }}
+                    sx={{
+                      mr: 1,
+                      color: "secondary.contrastText"
+                    }}
                     onClick={() => navigate("/forgot-password")}>
                     Forgot Pwd.
                   </Button>
-                  <Button
+                  {/* <Button
                     variant="text"
                     color="secondary"
                     sx={{ mr: 1, color: "primary.contrastText" }}
                     onClick={() => navigate("/reset-password")}>
                     Reset Pwd.
-                  </Button>
+                  </Button> */}
                 </>
               ) : (
                 <>
@@ -141,7 +162,7 @@ const Navbar = () => {
                     color="secondary"
                     sx={{
                       mr: 1,
-                      color: "primary.contrastText"
+                      color: "secondary.contrastText"
                     }}
                     onClick={() => navigate("/dashboard")}>
                     Dashboard

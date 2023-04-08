@@ -102,7 +102,7 @@ const SignupPage = () => {
             <Typography
               variant="h2"
               sx={{
-                color: "secondary.light",
+                color: "secondary.contrastText",
                 display: "grid",
                 gridTemplateColumns: "max-content max-content",
                 gap: "2rem",
@@ -133,7 +133,7 @@ const SignupPage = () => {
               <Grid container spacing={4}>
                 <Grid item xs={12}>
                   <TextField
-                    color="secondary"
+                    color="primary"
                     fullWidth
                     required
                     type="text"
@@ -150,7 +150,7 @@ const SignupPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    color="secondary"
+                    color="primary"
                     fullWidth
                     required
                     type="text"
@@ -170,7 +170,7 @@ const SignupPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    color="secondary"
+                    color="primary"
                     fullWidth
                     required
                     type="text"
@@ -186,7 +186,7 @@ const SignupPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    color="secondary"
+                    color="primary"
                     select
                     fullWidth
                     required
@@ -209,7 +209,7 @@ const SignupPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    color="secondary"
+                    color="primary"
                     fullWidth
                     required
                     type="password"
@@ -229,8 +229,8 @@ const SignupPage = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Button
-                    variant="outlined"
-                    color="secondary"
+                    variant="contained"
+                    color="primary"
                     type="submit"
                     disabled={isSubmitting}
                     endIcon={<InputIcon />}

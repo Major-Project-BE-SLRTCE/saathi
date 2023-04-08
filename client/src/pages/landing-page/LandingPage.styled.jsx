@@ -29,14 +29,6 @@ export const LandingHeaderText = styled(Grid)`
   align-items: center;
 `;
 
-export const LandingHeaderTitle = styled(Grid)`
-  font-size: 6rem;
-  // font-family: "Montserrat", sans-serif;
-  font-family: "Sacramento", cursive;
-  font-weight: 100;
-  color: ${({ theme }) => theme.background.contrastText};
-`;
-
 export const LandingHeaderSubtitle = styled(Grid)`
   font-size: 1.25rem;
   font-family: "Poppins", sans-serif;
@@ -63,8 +55,8 @@ const moveBg = keyframes`
 `;
 
 export const Cursive = styled.span`
-  --color-one: #b50000;
-  --color-two: #00059e;
+  --color-one: #402b00;
+  --color-two: #00284e;
   --bg-size: 400%;
   font-family: "Sacramento", cursive;
   font-size: 3rem;

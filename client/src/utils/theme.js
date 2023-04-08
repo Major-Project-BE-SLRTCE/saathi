@@ -15,7 +15,6 @@ const styledTheme = {
 
 const muiTheme = createTheme({
   palette: {
-    mode: "dark",
     primary: {
       light: "#4caf50",
       main: "#388E3C",
@@ -26,7 +25,7 @@ const muiTheme = createTheme({
       light: "#e3f0d2",
       main: "#dcedc7",
       dark: "#9aa58b",
-      contrastText: "#000"
+      contrastText: "#111"
     }
   },
   typography: {

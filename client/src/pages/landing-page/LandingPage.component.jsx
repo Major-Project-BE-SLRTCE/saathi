@@ -4,7 +4,6 @@ import {
   LandingContainer,
   LandingHeader,
   LandingHeaderSubtitle,
-  LandingHeaderTitle,
   LandingHeaderImage,
   LandingHeaderText,
   LandingHeaderImageWrapper,
@@ -35,7 +34,9 @@ const LandingPage = () => {
                     animate={{ opacity: 1, y: -20 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 1, ease: "easeOut" }}>
-                    <LandingHeaderTitle>Saathi</LandingHeaderTitle>
+                    <Typography variant="h1" color="secondary.contrastText">
+                      Saathi
+                    </Typography>
                   </motion.div>
                 </Grid>
 
@@ -49,13 +50,20 @@ const LandingPage = () => {
                       duration: 0.75,
                       ease: "easeOut"
                     }}>
-                    <LandingHeaderSubtitle>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        fontFamily: "Poppins, sans-serif",
+                        fontSize: "1.5rem",
+                        fontWeight: 400,
+                        color: "secondary.contrastText"
+                      }}>
                       Your
                       <p>
                         <Cursive>personal</Cursive>
                       </p>
                       chat companion, available for you 24/7.
-                    </LandingHeaderSubtitle>
+                    </Typography>
                   </motion.div>
                 </Grid>
 
