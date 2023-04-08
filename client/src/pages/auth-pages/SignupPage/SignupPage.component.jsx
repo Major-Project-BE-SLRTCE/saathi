@@ -54,7 +54,13 @@ const SignupPage = () => {
     } catch (error) {
       setSubmitting(false);
       // console.error(error);
-      toast.error(error.response.data.message);
+      const { message } = error.response.data;
+      // check if message is an array
+      if (Array.isArray(message)) {
+        message.forEach((msg) => toast.error(msg));
+      } else {
+        toast.error(message);
+      }
     }
   };
 
