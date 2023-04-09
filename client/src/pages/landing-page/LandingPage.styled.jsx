@@ -88,3 +88,9 @@ export const AboutSectionTitle = styled.h3`
   color: ${({ theme }) => theme.text.secondary};
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 `;
+
+export const ImageCard = styled.img`
+  height: 100%;
+  width: 100%;
+  border-radius: 1rem;
+`;

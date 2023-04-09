@@ -164,7 +164,7 @@ const Navbar = () => {
                       mr: 1,
                       color: "secondary.contrastText"
                     }}
-                    onClick={() => navigate("/dashboard")}>
+                    onClick={() => navigate("/chat")}>
                     Dashboard
                   </Button>
                   <Button

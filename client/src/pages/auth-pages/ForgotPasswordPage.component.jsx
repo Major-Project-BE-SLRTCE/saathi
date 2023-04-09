@@ -13,7 +13,7 @@ const ForgotPasswordPage = () => {
 
   useEffect(() => {
     if (auth.user) {
-      navigate("/dashboard");
+      navigate("/chat");
     }
   }, [auth.user, navigate]);
 

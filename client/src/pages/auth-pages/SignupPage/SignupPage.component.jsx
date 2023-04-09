@@ -30,7 +30,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (auth.user) {
-      navigate("/dashboard");
+      navigate("/chat");
     }
   }, [auth.user, navigate]);
   const handleSignup = async (data) => {

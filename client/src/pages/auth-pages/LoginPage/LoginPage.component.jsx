@@ -24,7 +24,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (auth.user) {
-      navigate("/dashboard");
+      navigate("/chat");
     }
   }, [auth.user, navigate]);
 
@@ -42,7 +42,7 @@ const LoginPage = () => {
         user: loginRes.data.user
       });
       toast.success("Login successful");
-      navigate("/dashboard");
+      navigate("/chat");
     } catch (error) {
       setAuth({});
       setSubmitting(false);

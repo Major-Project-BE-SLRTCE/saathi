@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useRef, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -19,6 +19,9 @@ import { padding } from "@mui/system";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, matchPath } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import useSocket from "../../hooks/useSocket";
+import { Configuration, OpenAIApi } from "openai";
+
 const drawerWidth = 240;
 
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -37,36 +40,79 @@ const paperStyles = {
   height: "auto"
 };
 
-const messages = [
-  {
-    id: 1,
-    message: "Hello, how are you?",
-    self: false
-  },
-
-  {
-    id: 2,
-    message: "I'm fine, thank you!",
-    self: true
-  },
-  {
-    id: 3,
-    message: "Good to hear that!",
-    self: true
-  }
-];
-
 const Dashboard = ({ page }) => {
-  const [activeTab, setActiveTab] = React.useState(page);
+  const openaiApiKey = "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";
+  const configuration = new Configuration({
+    apiKey: openaiApiKey
+  });
+  const openai = new OpenAIApi(configuration);
+  async function createCompletion(msg) {
+    try {
+      const response = await openai.createCompletion({
+        model: "davinci:ft-personal-2023-03-31-02-29-28",
+        prompt: msg + " \n\n###\n\n",
+        max_tokens: 200
+      });
+      if (response.data) {
+        return response.data;
+      } else {
+        return null;
+      }
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  }
 
+  const [activeTab, setActiveTab] = useState(page);
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+  const formRef = useRef(null);
+  const bottomRef = useRef(null);
   const navigate = useNavigate();
   const { setAuth } = useAuth();
+  const { socket } = useSocket();
   const handleLogout = () => {
     localStorage.removeItem("ACCESS_TOKEN");
     localStorage.removeItem("USER");
     setAuth({});
     navigate("/");
   };
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (!message) return;
+    const data = {
+      message,
+      self: true,
+      id: self.crypto.randomUUID()
+    };
+    // socket.emit("new_message", data);
+    setMessage("");
+    setMessages((prev) => [...prev, data]);
+    const openAIMessage = await createCompletion(message);
+    const openAIResponse = {
+      message: openAIMessage.choices[0].text,
+      self: false,
+      id: self.crypto.randomUUID()
+    };
+    setMessages((prev) => [...prev, openAIResponse]);
+  };
+
+  const handleReceiveMessage = (data) => {
+    console.log(data);
+    setMessages((prev) => [...prev, data]);
+  };
+
+  // useEffect(() => {
+  //   socket.on("receive_message", handleReceiveMessage);
+  //   return () => {
+  //     socket.off("receive_message");
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    bottomRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -164,7 +210,8 @@ const Dashboard = ({ page }) => {
           flexGrow: 1,
           p: 3,
           display: "grid",
-          height: "100vh",
+          minHeight: "100vh",
+          maxHeight: "100vh",
           gridAutoRows: "auto 1fr",
           gap: 2
         }}>
@@ -185,14 +232,16 @@ const Dashboard = ({ page }) => {
           sx={{
             ...paperStyles,
             padding: 2,
-            height: "100%",
+            maxHeight: "100vh",
             display: "grid",
-            gridTemplateRows: "1fr auto"
+            gridTemplateRows: "1fr auto",
+            overflowY: "hidden"
           }}>
-          <Box sx={{ flexGrow: 1, overflow: "auto" }}>
+          <Box sx={{ flexGrow: 1, maxHeight: "100%", overflowY: "scroll" }}>
             <Grid container spacing={2}>
-              {messages.map((message) => (
+              {messages.map((message, index) => (
                 <Grid
+                  key={index}
                   item
                   xs={12}
                   sx={{
@@ -216,15 +265,25 @@ const Dashboard = ({ page }) => {
                 </Grid>
               ))}
             </Grid>
+            <div
+              ref={bottomRef}
+              sx={{
+                height: "1px"
+              }}
+            />
           </Box>
-          <MessageInput
-            endAdornment={
-              <IconButton>
-                <SendIcon />
-              </IconButton>
-            }
-            placeholder="Type your message here"
-          />
+          <form ref={formRef} onSubmit={handleSendMessage}>
+            <MessageInput
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              endAdornment={
+                <IconButton type="submit">
+                  <SendIcon />
+                </IconButton>
+              }
+              placeholder="Type your message here"
+            />
+          </form>
         </Paper>
       </Box>
     </Box>
