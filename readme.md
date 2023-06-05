@@ -13,3 +13,5 @@
 - To start both i.e. server and client, run `yarn run app`.
 
 _**Note:** Run the above three commands only in the root folder._
+
+<!-- Changes for Railway re-deployment -->
